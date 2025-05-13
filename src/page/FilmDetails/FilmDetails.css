@@ -1,0 +1,145 @@
+.film-details-wrapper {
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+  font-family: 'Segoe UI', sans-serif;
+  color: #333;
+}
+
+.film-back-button {
+  background: none;
+  border: none;
+  color: #0077cc;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  padding: 0;
+}
+
+.film-back-button:hover {
+  text-decoration: underline;
+}
+
+.film-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.film-title {
+  margin-bottom: 1rem;
+  font-size: 2rem;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 0.5rem;
+}
+
+.film-info-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.film-info-list li {
+  margin-bottom: 0.75rem;
+  font-size: 1.1rem;
+}
+
+.film-details-loading,
+.film-details-error {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #888;
+  margin-top: 2rem;
+}
+
+.projection-select {
+  margin-top: 2rem;
+  align-items: center;
+}
+
+.projection-select label {
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
+.projection-select select {
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.projection-list {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.projection-item {
+  margin-bottom: 1rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.calendar-container {
+  margin-top: 2rem;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.calendar-header button {
+  padding: 0.5rem 1rem;
+  background: #0077cc;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.calendar-header button:hover {
+  background: #005fa3;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1rem;
+}
+
+.calendar-day {
+  background: #f8f8f8;
+  border-radius: 10px;
+  padding: 1rem;
+  min-height: 120px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.calendar-day h4 {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  color: #333;
+}
+
+.calendar-slot {
+  background: #fff;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.no-week-projection-msg {
+  color: #666;
+  font-style: italic;
+  text-align: center;
+  margin: 1rem 0;
+}
+
+
