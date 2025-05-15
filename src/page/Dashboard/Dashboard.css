@@ -104,6 +104,20 @@
   background-color: #c0392b;
 }
 
+.login-btn {
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: limegreen;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.login-btn:hover {
+  background-color: green;
+}
+
 .film-item {
   display: flex;
   justify-content: space-between;

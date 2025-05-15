@@ -52,3 +52,33 @@ export const add = async(credential: CinemaPayload, token: string): Promise<Cine
     return await res.json();
 }
 
+export const getCinemaById = async (id: string): Promise<Cinema> => {
+    const res = await fetch(`${BASE_URL}/cinemas/${id}`, {
+        method: 'GET',
+        headers: { 'Content-Type' : 'application/json' },
+    });
+
+    if (!res.ok) {
+        throw new Error('Erreur de connexion')
+    }
+
+    return await res.json();
+}
+
+export const updateCinema = async(credential: CinemaPayload, token: string): Promise<Cinema> => {
+    const res = await fetch(`${BASE_URL}/cinemas/update`, {
+        method: 'POST',
+        headers: { 
+            'Content-Type' : 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(credential)
+    });
+    
+    if (!res.ok) {
+        throw new Error('Erreur de connexion')
+    }
+
+    return await res.json();
+}
+

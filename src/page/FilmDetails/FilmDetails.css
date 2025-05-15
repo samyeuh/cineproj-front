@@ -142,4 +142,11 @@
   margin: 1rem 0;
 }
 
+.cinema-details {
+  background-color: #f9f9f9;
+  padding: 1em;
+  margin-top: 1em;
+  border-left: 4px solid #0077cc;
+  border-radius: 4px;
+}
 

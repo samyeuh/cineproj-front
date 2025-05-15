@@ -17,6 +17,7 @@ const FilmDetails: React.FC = () => {
   const [projections, setProjections] = useState<Projection[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentWeekStart, setCurrentWeekStart] = useState<Date>(startOfWeek(new Date(), { weekStartsOn: 1 }));
+  const [selectedCinema, setSelectedCinema] = useState<Cinema | null>(null);
   
   const dayMap = {
     "Monday": "Lundi",
@@ -135,13 +136,29 @@ useEffect(() => {
 
       <div className="projection-select">
         <label>Choisir un cinéma :</label>
-        <select value={cinemaId} onChange={(e) => setCinemaId(e.target.value)}>
+        <select
+            value={cinemaId}
+            onChange={(e) => {
+                const selectedId = e.target.value;
+                setCinemaId(selectedId);
+                const found = cinemas.find(c => c.id === selectedId);
+                setSelectedCinema(found || null);
+            }}
+        >
           <option value="">-- Sélectionner --</option>
           {cinemas.map((c) => (
             <option key={c.id} value={c.id}>{c.name}</option>
           ))}
         </select>
       </div>
+
+        {selectedCinema && (
+            <div className="cinema-details">
+                <h3>📍 {selectedCinema.name}</h3>
+                <p><strong>Adresse :</strong> {selectedCinema.address}</p>
+                <p><strong>Ville :</strong> {selectedCinema.city}</p>
+            </div>
+        )}
 
       {cinemaId && projections.length === 0 && (
         <p className="no-projection-msg">

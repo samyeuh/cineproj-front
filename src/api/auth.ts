@@ -9,11 +9,10 @@ export interface LoginPayload {
 
 export interface AuthResponse {
   token: string;
-  email: string;
 }
 
 export const login = async (credentials: LoginPayload): Promise<AuthResponse> => {
-  const res = await fetch(`${BASE_URL}/login`, {
+  const res = await fetch(`${BASE_URL}/auth/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(credentials),
@@ -27,7 +26,7 @@ export const login = async (credentials: LoginPayload): Promise<AuthResponse> =>
 }
 
 export const register = async (credentials: LoginPayload): Promise<AuthResponse> => {
-  const res = await fetch(`${BASE_URL}/register`, {
+  const res = await fetch(`${BASE_URL}/auth/register`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(credentials),

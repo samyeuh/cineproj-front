@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { login, register } from '../../api/auth.ts';
+import { me } from '../../api/users.ts';
 import './Sign.css';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../context/UserContext.tsx';
@@ -14,17 +15,38 @@ const Sign: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(`${mode === 'login' ? 'Login' : 'Register'} with`, { username, password });
     if (mode == 'login') {
       const res = await login({ username, email, password });
+      const user = await me(res.token);
+      
+      if (!user) {
+        console.error('User not found');
+        return;
+      }
+
       loginContext({
-        username,
-        email: res.email || undefined,
+        id: user.id,
+        username: user.username,
+        email: user.email,
         token: res.token,
+        isCinema: user.cinema,
+        isAdmin: user.admin,
       })
+
+      if (user.admin) {
+        navigate('/admin');
+        return;
+      }
+
+      if (user.cinema) {
+        navigate('/cinemas');
+        return;
+      } 
+      
       navigate('/');
+      
     } else if (mode == 'register') {
-      register({ username, email, password });
+      await register({ username, email, password });
       setMode('login');
     } else {
       console.error('Unknown mode');
@@ -84,6 +106,12 @@ const Sign: React.FC = () => {
           {mode === 'login' ? "S'inscire" : 'Se connecter'}
         </span>
       </p>
+      <p className="sign-switch">
+        Voir uniquement les films et projections ? {' '}
+        <span onClick={() => navigate('/')}>
+             Cliquez ici
+        </span>
+        </p>
     </div>
   );
 };

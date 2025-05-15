@@ -23,7 +23,7 @@ export interface ProjectionPayload {
     cinema: string | undefined;
     dateDebut: string | undefined;
     dateFin: string | undefined;
-    daysOfWeek: [] | undefined;
+    daysOfWeek: string[] | undefined;
     hour: string | undefined;
 }
 
@@ -43,6 +43,23 @@ export const searchProjections = async (credentials: ProjectionPayload): Promise
 
   return data;
 };
+
+export const addProjection = async (credential: ProjectionPayload, token: string): Promise<Projection> => {
+  const res = await fetch(`${BASE_URL}/projections/add`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(credential),
+  });
+
+  if (!res.ok) {
+    throw new Error('Erreur de connexion');
+  }
+
+  return await res.json();
+}                   
 
 
 

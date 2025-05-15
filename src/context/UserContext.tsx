@@ -1,9 +1,12 @@
 import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 
 interface User {
+  id: string;
   username: string;
   email?: string;
   token: string;
+  isCinema: boolean;
+  isAdmin: boolean;
 }
 
 interface UserContextType {
@@ -17,7 +20,6 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
 
-  // (Facultatif) Persistance utilisateur
   useEffect(() => {
     const savedUser = localStorage.getItem('user');
     if (savedUser) {
@@ -47,3 +49,4 @@ export const useUser = () => {
   if (!context) throw new Error('useUser must be used within a UserProvider');
   return context;
 };
+

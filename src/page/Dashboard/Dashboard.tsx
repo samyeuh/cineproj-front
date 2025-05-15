@@ -1,13 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Dashboard.css';
 import { searchFilms, FilmPayload, Film } from '../../api/films.ts';
 import { useNavigate } from 'react-router-dom';
-// import { searchCinemas, CinemaPayload, Cinema } from '../../api/cinemas.ts';
+import { useUser } from '../../context/UserContext.tsx';
 
-const Dashboard: React.FC<{ userEmail?: string; onLogout: () => void }> = ({ userEmail, onLogout }) => {
+const Dashboard: React.FC<{}> = ({}) => {
   const [query, setQuery] = useState('');
+  const [userEmail, setUserEmail] = useState<string | null>(null);
   const [results, setResults] = useState<Film[]>([]);
   const navigate = useNavigate();
+  const {user, logout} = useUser();
+
+  useEffect(() => {
+      setUserEmail(user?.username ?? null);
+  }, [user]);
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,7 +47,7 @@ const Dashboard: React.FC<{ userEmail?: string; onLogout: () => void }> = ({ use
     <div className="dashboard-container">
       <h1 className="dashboard-title">Bienvenue sur CineProj 🎬</h1>
       <p className="dashboard-subtitle">
-        {userEmail ? `Connecté en tant que ${userEmail}` : 'Utilisateur connecté'}
+        {userEmail ? `Connecté en tant que ${userEmail}` : 'Non connecté'}
       </p>
 
       <div className="search-container">
@@ -71,10 +77,15 @@ const Dashboard: React.FC<{ userEmail?: string; onLogout: () => void }> = ({ use
           </ul>
         )}
       </div>
-
-      <button className="logout-btn" onClick={onLogout}>
-        Se déconnecter
-      </button>
+      {userEmail ? 
+        (<button className="logout-btn" onClick={logout}>
+          Se déconnecter
+        </button>)
+      :
+        (<button className="login-btn" onClick={() => navigate('/login')}>
+          Se connecter
+        </button>)
+      }
     </div>
   );
 };

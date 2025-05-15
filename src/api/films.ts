@@ -42,7 +42,7 @@ export const searchFilms = async (credentials: FilmPayload): Promise<searchRespo
     return await res.json();
 }
 
-export const add = async(credential: FilmPayload, token: string): Promise<Film> => {
+export const addFilm = async(credential: FilmPayload, token: string): Promise<Film> => {
     const res = await fetch(`${BASE_URL}/films/add`, {
         method: 'POST',
         headers: { 
@@ -67,6 +67,37 @@ export const getFilmById = async (id: string): Promise<Film> => {
 
     if (!res.ok) {
         throw new Error('Erreur de connexion')
+    }
+
+    return await res.json();
+}
+
+export const deleteFilm = async (id: string, token: string): Promise<Film> => {
+    const res = await fetch(`${BASE_URL}/films/${id}`, {
+        method: 'DELETE',
+        headers: { 
+            'Content-Type' : 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+    });
+    if (!res.ok) {
+        throw new Error('Erreur de connexion')
+    }
+    return await res.json();
+}
+
+export const updateFilm = async(credential: Film, token: string): Promise<Film> => {
+    const res = await fetch(`${BASE_URL}/films/${credential.id}`, {
+        method: 'PUT',
+        headers: { 
+            'Content-Type' : 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(credential)
+    });
+
+    if (!res.ok) {
+        throw new Error('Erreur de connexion');
     }
 
     return await res.json();
