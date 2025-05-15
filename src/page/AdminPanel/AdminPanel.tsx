@@ -6,7 +6,7 @@ import { searchFilms, deleteFilm, FilmPayload, Film, updateFilm } from '../../ap
 import './AdminPanel.css';
 
 const AdminPanel: React.FC = () => {
-  const { user } = useUser();
+  const { user, logout } = useUser();
   const navigate = useNavigate();
   const [users, setUsers] = useState<any[]>([]);
   const [films, setFilms] = useState<any[]>([]);
@@ -312,6 +312,10 @@ const AdminPanel: React.FC = () => {
             </div>
         </div>
         )}
+
+        <button className="logout-btn" onClick={logout}>
+          Se déconnecter
+        </button>
     </div>
   );
 };

@@ -8,7 +8,7 @@ export interface searchResponse {
 export interface Cinema {
     id: string;
     name: string;
-    address: number;
+    address: string;
     city: string;
     owner_id: string;
 }
@@ -16,7 +16,7 @@ export interface Cinema {
 export interface CinemaPayload {
     id: string | undefined;
     name: string | undefined;
-    address: number | undefined;
+    address: string | undefined;
     city: string | undefined;
     owner_id: string | undefined;
 }
