@@ -3,6 +3,7 @@ import './Dashboard.css';
 import { searchFilms, FilmPayload, Film } from '../../api/films.ts';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../context/UserContext.tsx';
+import { FaSearch, FaSignInAlt, FaSignOutAlt, FaUserCircle, FaFilm } from 'react-icons/fa';
 
 const Dashboard: React.FC<{}> = ({}) => {
   const [query, setQuery] = useState('');
@@ -44,48 +45,66 @@ const Dashboard: React.FC<{}> = ({}) => {
   }
 
   return (
-    <div className="dashboard-container">
-      <h1 className="dashboard-title">Bienvenue sur CineProj 🎬</h1>
-      <p className="dashboard-subtitle">
-        {userEmail ? `Connecté en tant que ${userEmail}` : 'Non connecté'}
-      </p>
-
-      <div className="search-container">
-        <h2 className="search-title">Rechercher un film</h2>
-        <form className="search-form" onSubmit={handleSearch}>
-          <input
-            type="text"
-            placeholder="Nom du film"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-          />
-          <button type="submit">Rechercher</button>
-        </form>
-
-        {results.length > 0 && (
-          <ul className="search-results">
-            {results.map((r, i) => (
-              <li key={i} className="film-item" onClick={() => handleClickFilm(r)}>
-                <div className="film-info">
-                  {r.titre} <span className="film-realisateur">({r.realisateur})</span>
-                </div>
-                <div className="film-duree">
-                  {r.dureeEnMinute} min
-                </div>
-            </li>
-            ))}
-          </ul>
-        )}
+    <div className="dashboard-bg">
+      <div className="main-banner">
+        <div className="main-banner-content">
+          <FaFilm size={32} style={{ marginRight: 10 }} />
+          <span>CineProj</span>
+        </div>
       </div>
-      {userEmail ? 
-        (<button className="logout-btn" onClick={logout}>
-          Se déconnecter
-        </button>)
-      :
-        (<button className="login-btn" onClick={() => navigate('/login')}>
-          Se connecter
-        </button>)
-      }
+      <header className="dashboard-header">
+        <div />
+        <div className="dashboard-user-actions">
+          {userEmail ? (
+            <>
+              <span className="dashboard-user"><FaUserCircle /> {userEmail}</span>
+              <button className="logout-btn" onClick={logout} title="Se déconnecter">
+                <FaSignOutAlt />
+              </button>
+            </>
+          ) : (
+            <button className="login-btn" onClick={() => navigate('/login')} title="Se connecter">
+              <FaSignInAlt />
+            </button>
+          )}
+        </div>
+      </header>
+      <main className="dashboard-main">
+        <div className="dashboard-card">
+          <h1 className="dashboard-title">Bienvenue sur CineProj <span role="img" aria-label="cinema">🎬</span></h1>
+          <p className="dashboard-subtitle">
+            Découvrez les films à l'affiche et trouvez votre prochaine séance !
+          </p>
+          <form className="search-form" onSubmit={handleSearch}>
+            <div className="search-input-group">
+              <FaSearch className="search-icon" />
+              <input
+                type="text"
+                placeholder="Rechercher un film, un réalisateur..."
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+              />
+            </div>
+            <button type="submit" className="search-btn">Rechercher</button>
+          </form>
+          {results.length === 0 && query && (
+            <div className="dashboard-empty">Aucun film trouvé pour cette recherche.</div>
+          )}
+          <div className="dashboard-films-list">
+            {results.map((r, i) => (
+              <div key={i} className="film-card" onClick={() => handleClickFilm(r)}>
+                <div className="film-card-img">
+                  <FaFilm size={48} />
+                </div>
+                <div className="film-card-info">
+                  <div className="film-card-title">{r.titre}</div>
+                  <div className="film-card-meta">{r.dureeEnMinute} min • {r.realisateur}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </main>
     </div>
   );
 };

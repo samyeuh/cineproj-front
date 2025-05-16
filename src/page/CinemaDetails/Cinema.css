@@ -1,4 +1,28 @@
 /* Nouveau style dark et moderne pour CinemaDetails */
+/* Ajout du bandeau principal, centrage, hover accessible, harmonisation UI */
+.main-banner {
+  width: 100vw;
+  background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-accent) 100%);
+  color: #fff;
+  padding: 0.7rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+}
+.main-banner-content {
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  gap: 0.5rem;
+}
+
 .owner-cinemas-page,
 .cinema-details-container {
   max-width: 900px;
@@ -9,6 +33,10 @@
   color: var(--color-text);
   border-radius: var(--border-radius);
   box-shadow: var(--color-card-shadow);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 5rem;
 }
 
 .owner-cinemas-page h1,
@@ -21,6 +49,7 @@
 .cinema-list {
   list-style: none;
   padding: 0;
+  width: 100%;
 }
 .cinema-item {
   padding: 14px;
@@ -28,12 +57,13 @@
   border-radius: 8px;
   margin-bottom: 12px;
   background: var(--color-surface-alt);
-  transition: background 0.2s, border 0.2s;
+  transition: background 0.2s, border 0.2s, color 0.2s;
+  color: var(--color-text);
 }
 .cinema-item:hover {
-  background-color: var(--color-primary);
-  color: #fff;
-  border: 1.5px solid var(--color-primary);
+  background-color: var(--color-accent);
+  color: #23262f;
+  border: 1.5px solid var(--color-accent);
 }
 
 .projections-section ul {
@@ -55,6 +85,8 @@
   border-top: 2px solid var(--color-border);
   background: var(--color-bg-secondary);
   border-radius: 0 0 var(--border-radius) var(--border-radius);
+  width: 100%;
+  max-width: 600px;
 }
 .add-projection-section label {
   display: block;

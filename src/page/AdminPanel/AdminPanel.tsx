@@ -3,6 +3,7 @@ import { useUser } from '../../context/UserContext';
 import { useNavigate } from 'react-router-dom';
 import { searchUsers, deleteUser, UserPayload, User, updateUser } from '../../api/users';
 import { searchFilms, deleteFilm, FilmPayload, Film, updateFilm } from '../../api/films';
+import { FaFilm } from 'react-icons/fa';
 import './AdminPanel.css';
 
 const AdminPanel: React.FC = () => {
@@ -153,169 +154,177 @@ const AdminPanel: React.FC = () => {
   if (loading) return <div className="admin-loading">Chargement...</div>;
 
   return (
-    <div className="admin-panel">
-      <h1>🛠️ Panneau d'administration</h1>
-
-      <section>
-        <div className="admin-header">
-          <h2>Utilisateurs</h2>
+    <div>
+      <div className="main-banner">
+        <div className="main-banner-content">
+          <FaFilm size={32} style={{ marginRight: 10 }} />
+          <span>CineProj</span>
         </div>
-        <table className="admin-table">
-          <thead>
-            <tr>
-              <th>Nom</th>
-              <th>Email</th>
-              <th>Admin</th>
-              <th>Cinéma</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((u) => (
-              <tr key={u.id}>
-                <td>{u.username}</td>
-                <td>{u.email}</td>
-                <td>{u.admin ? '✅' : '❌'}</td>
-                <td>{u.cinema ? '✅' : '❌'}</td>
-                <td>
-                  <button onClick={() => openUserModal(u)}>✏️</button>
-                  <button onClick={() => handleDeleteUser(u.id)}>🗑️</button>
-                </td>
+      </div>
+      <div className="admin-panel">
+        <h1>🛠️ Panneau d'administration</h1>
+
+        <section>
+          <div className="admin-header">
+            <h2>Utilisateurs</h2>
+          </div>
+          <table className="admin-table">
+            <thead>
+              <tr>
+                <th>Nom</th>
+                <th>Email</th>
+                <th>Admin</th>
+                <th>Cinéma</th>
+                <th>Actions</th>
               </tr>
+            </thead>
+            <tbody>
+              {users.map((u) => (
+                <tr key={u.id}>
+                  <td>{u.username}</td>
+                  <td>{u.email}</td>
+                  <td>{u.admin ? '✅' : '❌'}</td>
+                  <td>{u.cinema ? '✅' : '❌'}</td>
+                  <td>
+                    <button onClick={() => openUserModal(u)}>✏️</button>
+                    <button onClick={() => handleDeleteUser(u.id)}>🗑️</button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </section>
+
+        <section>
+          <div className="admin-header">
+            <h2>Films</h2>
+            <button className="admin-add-btn" onClick={() => openFilmModal()}>➕ Ajouter</button>
+          </div>
+          <ul className="film-list">
+            {films.map((f) => (
+              <li key={f.id}>
+                🎬 <strong>{f.titre}</strong> ({f.lang}) – {f.dureeEnMinute} min
+                <span className="film-actions">
+                  <button onClick={() => openFilmModal(f)}>✏️</button>
+                  <button onClick={() => handleDeleteFilm(f.id)}>🗑️</button>
+                </span>
+              </li>
             ))}
-          </tbody>
-        </table>
-      </section>
+          </ul>
+        </section>
 
-      <section>
-        <div className="admin-header">
-          <h2>Films</h2>
-          <button className="admin-add-btn" onClick={() => openFilmModal()}>➕ Ajouter</button>
-        </div>
-        <ul className="film-list">
-          {films.map((f) => (
-            <li key={f.id}>
-              🎬 <strong>{f.titre}</strong> ({f.lang}) – {f.dureeEnMinute} min
-              <span className="film-actions">
-                <button onClick={() => openFilmModal(f)}>✏️</button>
-                <button onClick={() => handleDeleteFilm(f.id)}>🗑️</button>
-              </span>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      {/* USER MODAL */}
-      {showUserModal && editingUser && (
-        <div className="modal">
-          <div className="modal-content">
-            <h3>{editingUser.id ? 'Modifier un utilisateur' : 'Ajouter un utilisateur'}</h3>
-            <label>Nom d'utilisateur</label>
-            <input
-              value={editingUser.username}
-              onChange={(e) => setEditingUser({ ...editingUser, username: e.target.value })}
-            />
-            <label>Email</label>
-            <input
-              value={editingUser.email}
-              onChange={(e) => setEditingUser({ ...editingUser, email: e.target.value })}
-            />
-            <label>
+        {/* USER MODAL */}
+        {showUserModal && editingUser && (
+          <div className="modal">
+            <div className="modal-content">
+              <h3>{editingUser.id ? 'Modifier un utilisateur' : 'Ajouter un utilisateur'}</h3>
+              <label>Nom d'utilisateur</label>
               <input
-                type="checkbox"
-                checked={editingUser.admin}
-                onChange={(e) => setEditingUser({ ...editingUser, admin: e.target.checked })}
+                value={editingUser.username}
+                onChange={(e) => setEditingUser({ ...editingUser, username: e.target.value })}
               />
-              Admin
-            </label>
-            <label>
+              <label>Email</label>
               <input
-                type="checkbox"
-                checked={editingUser.cinema}
-                onChange={(e) => setEditingUser({ ...editingUser, cinema: e.target.checked })}
+                value={editingUser.email}
+                onChange={(e) => setEditingUser({ ...editingUser, email: e.target.value })}
               />
-              Gérant cinéma
-            </label>
-            <div className="modal-actions">
-              <button onClick={handleUserFormSubmit}>✅ Enregistrer</button>
-              <button onClick={closeModals}>Annuler</button>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={editingUser.admin}
+                  onChange={(e) => setEditingUser({ ...editingUser, admin: e.target.checked })}
+                />
+                Admin
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={editingUser.cinema}
+                  onChange={(e) => setEditingUser({ ...editingUser, cinema: e.target.checked })}
+                />
+                Gérant cinéma
+              </label>
+              <div className="modal-actions">
+                <button onClick={handleUserFormSubmit}>✅ Enregistrer</button>
+                <button onClick={closeModals}>Annuler</button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {/* FILM MODAL */}
-      {showFilmModal && editingFilm && (
-        <div className="modal">
-            <div className="modal-content">
-            <h3>{editingFilm.id ? 'Modifier un film' : 'Ajouter un film'}</h3>
+        {/* FILM MODAL */}
+        {showFilmModal && editingFilm && (
+          <div className="modal">
+              <div className="modal-content">
+              <h3>{editingFilm.id ? 'Modifier un film' : 'Ajouter un film'}</h3>
 
-            <label>Titre</label>
-            <input
-                value={editingFilm.titre}
-                onChange={(e) => setEditingFilm({ ...editingFilm, titre: e.target.value })}
-            />
+              <label>Titre</label>
+              <input
+                  value={editingFilm.titre}
+                  onChange={(e) => setEditingFilm({ ...editingFilm, titre: e.target.value })}
+              />
 
-            <label>Langue</label>
-            <input
-                value={editingFilm.lang}
-                onChange={(e) => setEditingFilm({ ...editingFilm, lang: e.target.value })}
-            />
+              <label>Langue</label>
+              <input
+                  value={editingFilm.lang}
+                  onChange={(e) => setEditingFilm({ ...editingFilm, lang: e.target.value })}
+              />
 
-            <label>Sous-titres</label>
-            <input
-                value={editingFilm.soustitres || ''}
-                onChange={(e) => setEditingFilm({ ...editingFilm, soustitres: e.target.value })}
-            />
+              <label>Sous-titres</label>
+              <input
+                  value={editingFilm.soustitres || ''}
+                  onChange={(e) => setEditingFilm({ ...editingFilm, soustitres: e.target.value })}
+              />
 
-            <label>Réalisateur</label>
-            <input
-                value={editingFilm.realisateur || ''}
-                onChange={(e) => setEditingFilm({ ...editingFilm, realisateur: e.target.value })}
-            />
+              <label>Réalisateur</label>
+              <input
+                  value={editingFilm.realisateur || ''}
+                  onChange={(e) => setEditingFilm({ ...editingFilm, realisateur: e.target.value })}
+              />
 
-            <label>Acteurs (séparés par des virgules)</label>
-            <input
-                value={editingFilm.acteurs?.join(', ') || ''}
-                onChange={(e) =>
-                setEditingFilm({
-                    ...editingFilm,
-                    acteurs: e.target.value.split(',').map((a) => a.trim()),
-                })
-                }
-            />
+              <label>Acteurs (séparés par des virgules)</label>
+              <input
+                  value={editingFilm.acteurs?.join(', ') || ''}
+                  onChange={(e) =>
+                  setEditingFilm({
+                      ...editingFilm,
+                      acteurs: e.target.value.split(',').map((a) => a.trim()),
+                  })
+                  }
+              />
 
-            <label>Âge minimum</label>
-            <input
-                type="number"
-                min="0"
-                value={editingFilm.ageMin ?? 0}
-                onChange={(e) =>
-                setEditingFilm({ ...editingFilm, ageMin: parseInt(e.target.value) || 0 })
-                }
-            />
+              <label>Âge minimum</label>
+              <input
+                  type="number"
+                  min="0"
+                  value={editingFilm.ageMin ?? 0}
+                  onChange={(e) =>
+                  setEditingFilm({ ...editingFilm, ageMin: parseInt(e.target.value) || 0 })
+                  }
+              />
 
-            <label>Durée (min)</label>
-            <input
-                type="number"
-                min="1"
-                value={editingFilm.dureeEnMinute}
-                onChange={(e) =>
-                setEditingFilm({ ...editingFilm, dureeEnMinute: parseInt(e.target.value) || 0 })
-                }
-            />
+              <label>Durée (min)</label>
+              <input
+                  type="number"
+                  min="1"
+                  value={editingFilm.dureeEnMinute}
+                  onChange={(e) =>
+                  setEditingFilm({ ...editingFilm, dureeEnMinute: parseInt(e.target.value) || 0 })
+                  }
+              />
 
-            <div className="modal-actions">
-                <button onClick={handleFilmFormSubmit}>✅ Enregistrer</button>
-                <button onClick={closeModals}>Annuler</button>
-            </div>
-            </div>
-        </div>
+              <div className="modal-actions">
+                  <button onClick={handleFilmFormSubmit}>✅ Enregistrer</button>
+                  <button onClick={closeModals}>Annuler</button>
+              </div>
+              </div>
+          </div>
         )}
 
         <button className="logout-btn" onClick={logout}>
           Se déconnecter
         </button>
+      </div>
     </div>
   );
 };

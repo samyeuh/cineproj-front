@@ -1,3 +1,27 @@
+/* Ajout du bandeau principal, centrage, hover accessible, harmonisation UI */
+.main-banner {
+  width: 100vw;
+  background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-accent) 100%);
+  color: #fff;
+  padding: 0.7rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+}
+.main-banner-content {
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  gap: 0.5rem;
+}
+
 .film-details-wrapper {
   padding: 2.5rem 1.5rem;
   max-width: 900px;
@@ -7,6 +31,10 @@
   background: var(--color-surface);
   border-radius: var(--border-radius);
   box-shadow: var(--color-card-shadow);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 5rem;
 }
 
 .film-back-button {
@@ -29,6 +57,10 @@
   border-radius: var(--border-radius);
   padding: 2rem 1.5rem;
   box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+  margin-bottom: 2rem;
+  width: 90%;
+  max-width: 600px;
+  color: var(--color-text);
 }
 
 .film-title {
@@ -53,6 +85,10 @@
   color: var(--color-accent);
 }
 
+.film-card:hover .film-info-list li strong {
+  color: var(--color-surface);
+}
+
 .film-details-loading,
 .film-details-error {
   text-align: center;
@@ -64,6 +100,8 @@
 .projection-select {
   margin-top: 2rem;
   align-items: center;
+  width: 100%;
+  max-width: 600px;
 }
 .projection-select label {
   font-weight: bold;
@@ -106,6 +144,8 @@
   border-radius: var(--border-radius);
   box-shadow: 0 2px 8px rgba(0,0,0,0.10);
   padding: 1.5rem 1rem;
+  width: 100%;
+  max-width: 700px;
 }
 .calendar-header {
   display: flex;
